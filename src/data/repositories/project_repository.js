@@ -22,9 +22,9 @@ class ProjectRepositoryImpl extends ProjectRepository {
     }
 
     async createProject(project) {
-        const { title, description, imageUrl, id } = project;
+        const { title, description, imageUrl, id, projectUrl } = project;
         console.log(`this is creating ....${project} ${JSON.stringify(project)}`)
-        const query = 'INSERT INTO projects (title, description, imageUrl, id) VALUES (?, ?, ?, ?)';
+        const query = 'INSERT INTO projects (title, description, imageUrl, id,projectUrl) VALUES (?, ?, ?, ?,?)';
         const params = [title, description, imageUrl, id];
         const [result] = await mysqlDataSource.executeModificationQuery(query, params);
 
@@ -32,9 +32,9 @@ class ProjectRepositoryImpl extends ProjectRepository {
     }
 
     async updateProject(project) {
-        const { id, title, description, imageUrl } = project;
-        const query = 'UPDATE projects SET title = ?, description = ?, imageUrl = ? WHERE id = ?';
-        const params = [title, description, imageUrl, id];
+        const { id, title, description, imageUrl, projectUrl } = project;
+        const query = 'UPDATE projects SET title = ?, description = ?, imageUrl = ? WHERE id = ? WHERE projectUrl = ?';
+        const params = [title, description, imageUrl, id, projectUrl];
         const [result] = await mysqlDataSource.executeModificationQuery(query, params);
 
         return result;

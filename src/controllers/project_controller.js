@@ -26,14 +26,14 @@ class ProjectController {
 
     async createProject(req, res) {
 
-        const { title, description, imageUrl, id } = req.body;
+        const { title, description, imageUrl, id, projectUrl } = req.body;
 
-        if (!title || !description || !imageUrl || !id) {
+        if (!title || !description || !imageUrl || !id || !projectUrl) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
         try {
-            const projectId = await this.createProjectUseCase.execute(id, title, description, imageUrl);
+            const projectId = await this.createProjectUseCase.execute(id, title, description, imageUrl, projectUrl);
             res.status(201).json({ id: projectId });
         } catch (error) {
             res.status(500).json({ error: `Internal server error : ${error}` });
@@ -42,14 +42,14 @@ class ProjectController {
 
     async updateProject(req, res) {
 
-        const { title, description, imageUrl, id } = req.body;
+        const { title, description, imageUrl, id, projectUrl } = req.body;
 
-        if (!title || !description || !imageUrl || !id) {
+        if (!title || !description || !imageUrl || !id || !projectUrl) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
         try {
-            const projectId = await this.updateProjectUseCase.execute(id, title, description, imageUrl);
+            const projectId = await this.updateProjectUseCase.execute(id, title, description, imageUrl, projectUrl);
             res.status(201).json({ id: projectId });
         } catch (error) {
             res.status(500).json({ error: 'Internal server error' });
