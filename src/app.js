@@ -31,7 +31,7 @@ const deleteProjectByIdUseCase = new DeleteProjectByIdUseCase(projectRepository)
 const projectController = new ProjectController(getAllProjectsUseCase, createProjectUseCase, updateProjectUseCase, deleteProjectByIdUseCase);
 
 
-app.use('/projects', projectRoutes({ projectController }));
+app.use('', projectRoutes({ projectController }));
 
 module.exports = app;
 
