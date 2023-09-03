@@ -30,13 +30,13 @@ const deleteProjectByIdUseCase = new DeleteProjectByIdUseCase(projectRepository)
 
 const projectController = new ProjectController(getAllProjectsUseCase, createProjectUseCase, updateProjectUseCase, deleteProjectByIdUseCase);
 
+const PORT = process.env.PORT || 4000;
+
 
 app.use('/projects', projectRoutes({ projectController }));
 
 module.exports = app;
 
-
-const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
