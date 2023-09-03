@@ -33,7 +33,7 @@ class ProjectRepositoryImpl extends ProjectRepository {
 
     async updateProject(project) {
         const { id, title, description, imageUrl, projectUrl } = project;
-        const query = 'UPDATE projects SET title = ?, description = ?, imageUrl = ? projectUrl = ? WHERE id = ?';
+        const query = 'UPDATE projects SET title = ?, description = ?, imageUrl = ?,  projectUrl = ? WHERE id = ?';
         const params = [title, description, imageUrl, projectUrl, id];
         const [result] = await mysqlDataSource.executeModificationQuery(query, params);
 
