@@ -36,7 +36,7 @@ class ProjectController {
             const projectId = await this.createProjectUseCase.execute(id, title, description, imageUrl);
             res.status(201).json({ id: projectId });
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' });
+            res.status(500).json({ error: `Internal server error : ${error}` });
         }
     }
 
