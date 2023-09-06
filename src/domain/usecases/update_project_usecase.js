@@ -7,7 +7,7 @@ class UpdateProjectUseCase {
         this.projectRepository = projectRepository;
     }
 
-    async execute(id, title, description, imageUrl, projectUrl) {
+    async execute(id, title, description, imageUrl, projectUrl, projectCategory) {
 
         const updatedProject = new Project(
             id,
@@ -15,6 +15,7 @@ class UpdateProjectUseCase {
             description,
             imageUrl,
             projectUrl,
+            projectCategory
 
         )
         return this.projectRepository.updateProject(updatedProject);

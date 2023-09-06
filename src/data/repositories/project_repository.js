@@ -21,20 +21,30 @@ class ProjectRepositoryImpl extends ProjectRepository {
 
     }
 
+    async getProjectsByFilter(filter) {
+        console.log(`this is here in repo ....${filter} ${JSON.stringify(filter)}`)
+        const query = 'SELECT * FROM projects WHERE projectCategory = ?';
+        const params = [filter];
+        const [rows] = await mysqlDataSource.executeSelectQuery(query, params);
+
+        return rows;
+
+    }
+
     async createProject(project) {
-        const { title, description, imageUrl, id, projectUrl } = project;
+        const { title, description, imageUrl, id, projectUrl, projectCategory } = project;
         console.log(`this is creating ....${project} ${JSON.stringify(project)}`)
-        const query = 'INSERT INTO projects (title, description, imageUrl, id, projectUrl) VALUES (?, ?, ?, ?,?)';
-        const params = [title, description, imageUrl, id, projectUrl];
+        const query = 'INSERT INTO projects (title, description, imageUrl, id, projectUrl,projectCategory) VALUES (?, ?, ?, ?,?,?)';
+        const params = [title, description, imageUrl, id, projectUrl, projectCategory];
         const [result] = await mysqlDataSource.executeModificationQuery(query, params);
 
         return result;
     }
 
     async updateProject(project) {
-        const { id, title, description, imageUrl, projectUrl } = project;
-        const query = 'UPDATE projects SET title = ?, description = ?, imageUrl = ?,  projectUrl = ? WHERE id = ?';
-        const params = [title, description, imageUrl, projectUrl, id];
+        const { id, title, description, imageUrl, projectUrl, projectCategory } = project;
+        const query = 'UPDATE projects SET title = ?, description = ?, imageUrl = ?,  projectUrl = ? , projectCategory = ? WHERE id = ?';
+        const params = [title, description, imageUrl, projectUrl, projectCategory, id];
         const [result] = await mysqlDataSource.executeModificationQuery(query, params);
 
         return result;

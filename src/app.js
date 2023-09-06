@@ -9,6 +9,7 @@ app.use(express.json());
 
 const ProjectRepositoryImpl = require('./data/repositories/project_repository');
 const GetAllProjectsUseCase = require('./domain/usecases/getall_projects_usecase');
+const GetProjectsByFilterUsecase = require('./domain/usecases/get_projects_by_filter');
 const CreateProjectUseCase = require('./domain/usecases/create_project_usecase');
 const UpdateProjectUseCase = require('./domain/usecases/update_project_usecase');
 const DeleteProjectByIdUseCase = require('./domain/usecases/delete_project_by_id_usecase');
@@ -21,6 +22,7 @@ const projectRoutes = require('./routes/project_routes');
 
 const projectRepository = new ProjectRepositoryImpl();
 const getAllProjectsUseCase = new GetAllProjectsUseCase(projectRepository);
+const getProjectsByFilterUseCase = new GetProjectsByFilterUsecase(projectRepository);
 const createProjectUseCase = new CreateProjectUseCase(projectRepository);
 const updateProjectUseCase = new UpdateProjectUseCase(projectRepository);
 const deleteProjectByIdUseCase = new DeleteProjectByIdUseCase(projectRepository);
@@ -28,7 +30,7 @@ const deleteProjectByIdUseCase = new DeleteProjectByIdUseCase(projectRepository)
 
 
 
-const projectController = new ProjectController(getAllProjectsUseCase, createProjectUseCase, updateProjectUseCase, deleteProjectByIdUseCase);
+const projectController = new ProjectController(getAllProjectsUseCase, createProjectUseCase, updateProjectUseCase, deleteProjectByIdUseCase, getProjectsByFilterUseCase);
 
 const PORT = process.env.PORT || 4000;
 

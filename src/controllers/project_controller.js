@@ -1,11 +1,16 @@
 
 class ProjectController {
 
-    constructor(getAllProjectsUseCase, createProjectUseCase, updateProjectUseCase, deleteProjectUseCase) {
+    constructor(
+        getAllProjectsUseCase,
+        createProjectUseCase, updateProjectUseCase,
+        deleteProjectUseCase, getProjectsByFilterUsecase
+    ) {
         this.getAllProjectsUseCase = getAllProjectsUseCase;
         this.createProjectUseCase = createProjectUseCase;
         this.updateProjectUseCase = updateProjectUseCase;
         this.deleteProjectUseCase = deleteProjectUseCase;
+        this.getProjectsByFilterUsecase = getProjectsByFilterUsecase;
         console.log(`this is value : and this is here....${JSON.stringify(this)}`);
     }
 
@@ -24,16 +29,34 @@ class ProjectController {
 
     }
 
+    async projectsByFilter(req, res) {
+
+        const { projectCategory } = req.body;
+
+        console.log(`this is filter controller :${JSON.stringify(projectCategory)}`);
+
+        if (!projectCategory) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+        try {
+            const projects = await this.getProjectsByFilterUsecase.execute(projectCategory);
+            res.json(projects);
+        } catch (error) {
+            res.status(500).json({ error: `Internal server error : ${error}` });
+        }
+
+    }
+
     async createProject(req, res) {
 
-        const { title, description, imageUrl, id, projectUrl } = req.body;
+        const { title, description, imageUrl, id, projectUrl, projectCategory } = req.body;
 
-        if (!title || !description || !imageUrl || !id || !projectUrl) {
+        if (!title || !description || !imageUrl || !id || !projectUrl || !projectCategory) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
         try {
-            const projectId = await this.createProjectUseCase.execute(id, title, description, imageUrl, projectUrl);
+            const projectId = await this.createProjectUseCase.execute(id, title, description, imageUrl, projectUrl, projectCategory);
             res.status(201).json({ id: projectId });
         } catch (error) {
             res.status(500).json({ error: `Internal server error : ${error}` });
@@ -42,14 +65,14 @@ class ProjectController {
 
     async updateProject(req, res) {
 
-        const { title, description, imageUrl, id, projectUrl } = req.body;
+        const { title, description, imageUrl, id, projectUrl, projectCategory } = req.body;
 
-        if (!title || !description || !imageUrl || !id || !projectUrl) {
+        if (!title || !description || !imageUrl || !id || !projectUrl || !projectCategory) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
         try {
-            const projectId = await this.updateProjectUseCase.execute(id, title, description, imageUrl, projectUrl);
+            const projectId = await this.updateProjectUseCase.execute(id, title, description, imageUrl, projectUrl, projectCategory);
             res.status(201).json({ id: projectId });
         } catch (error) {
             console.log(`${error}`)

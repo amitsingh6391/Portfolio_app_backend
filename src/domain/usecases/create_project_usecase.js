@@ -7,7 +7,7 @@ class CreateProjectUseCase {
         this.projectRepository = projectRepository;
     }
 
-    async execute(id, title, description, imageUrl, projectUrl) {
+    async execute(id, title, description, imageUrl, projectUrl, projectCategory) {
 
         const newProject = new Project(
             id,
@@ -15,6 +15,7 @@ class CreateProjectUseCase {
             description,
             imageUrl,
             projectUrl,
+            projectCategory
 
         )
         return this.projectRepository.createProject(newProject);
