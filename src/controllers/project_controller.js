@@ -31,7 +31,7 @@ class ProjectController {
 
     async projectsByFilter(req, res) {
 
-        const { projectCategory } = req.body;
+        const { projectCategory } = req.query;
 
         console.log(`this is filter controller :${JSON.stringify(projectCategory)}`);
 
